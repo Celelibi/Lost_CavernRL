@@ -25,7 +25,7 @@ _____|\___/ ____/\__|  \____|\__,_|  \_/ \___|_|   _|  _|
 
 void quit();
 
-int main(int argc, char **argv)
+int main(void)
 {
 	srand(time(NULL));
 
