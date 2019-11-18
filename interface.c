@@ -77,7 +77,7 @@ void printScreenUser(WINDOW *win, Player player, int powerUsed, char diseaseName
 	wrefresh(win);
 }
 
-void printBar(WINDOW *win, char name[15],int attribute, int x, int y, int colorpair)
+void printBar(WINDOW *win, char name[15],unsigned int attribute, int x, int y, int colorpair)
 {
 	unsigned int i = 0;
 	mvwprintw(win,x,y,"%s: ",name);
@@ -96,7 +96,7 @@ void printBar(WINDOW *win, char name[15],int attribute, int x, int y, int colorp
 		wattroff(win,COLOR_PAIR(colorpair));
 
 		wattron(win,A_BOLD);
-		mvwprintw(win,x,strlen(name)+16,"(%d)  ",attribute);
+		mvwprintw(win,x,strlen(name)+16,"(%u)  ",attribute);
 		wattroff(win,A_BOLD);
 	}
 	else
