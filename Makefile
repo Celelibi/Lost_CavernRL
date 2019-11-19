@@ -1,5 +1,6 @@
 CC=gcc
-CFLAGS=-std=c99 -pedantic -Wall -Wextra
+OPTFLAGS=-ggdb3 -Og
+CFLAGS=-std=c99 -pedantic -Wall -Wextra $(OPTFLAGS)
 LD=gcc
 LDFLAGS=
 LIBS=-lm -lncurses
