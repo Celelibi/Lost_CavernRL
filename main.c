@@ -158,7 +158,7 @@ int main(void)
 		wrefresh(win_Begin);
 	}
 
-	mvwprintw(win_Begin,16,0,"Hi %s, we were waiting for you.",name);
+	mvwprintw(win_Begin,16,0,"Hi %s, we were waiting for you.",player.name);
 	mvwprintw(win_Begin,17,0,"Unfortunately, you were infected by the %s",typeDisease[diseaseIndice]);
 	wattron(win_Begin,COLOR_PAIR(197));
 	mvwprintw(win_Begin,17,50,"%s",diseaseName[diseaseIndice]);
