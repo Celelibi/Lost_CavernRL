@@ -88,7 +88,7 @@ int hitEnnemy(Player player, Ennemy *ennemy, Weapons weaponHold, int *components
 int burn(Map map[LONGUEUR][LARGEUR],Weapons *weaponHold,Ennemy ennemies[], char dir, Player player, int nbrEnnemies, int *components,WINDOW *screen)
 {
 	int ret = 0;
-	int x, y = 0;
+	int x  = 0, y = 0;
 	int posX = player.x;
 	int posY = player.y;
 
@@ -206,7 +206,7 @@ int burn(Map map[LONGUEUR][LARGEUR],Weapons *weaponHold,Ennemy ennemies[], char 
 void crystalCanon(Map map[LONGUEUR][LARGEUR], Player player, char dir)
 {
 
-		int x, y = 0;
+		int x = 0, y = 0;
 		int posX = player.x;
 		int posY = player.y;
 
@@ -256,7 +256,7 @@ void crystalCanon(Map map[LONGUEUR][LARGEUR], Player player, char dir)
 
 int shotLine(Map map[LONGUEUR][LARGEUR],Weapons *weaponHold, Ennemy ennemies[], char dir, Player player, int nbrEnnemies, int *components)
 {
-	int x, y = 0;
+	int x = 0, y = 0;
 	int posX = player.x;
 	int posY = player.y;
 	int noGem = 0; // you must pick a gem with contact weapons
