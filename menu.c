@@ -5,7 +5,6 @@ void questsMenu(Quest actQuest[], int nbrQuestAct, Weapons listWeapons[], Armor 
 {
 	int i = 0;
 	int j = 0;
-	int key = 0;
 	char *typeRewards[] = {"VAX","LIFE POINTS","COMPONENTS","EXOTIC BLOOD"};
 
 	WINDOW *win;
@@ -69,7 +68,7 @@ void questsMenu(Quest actQuest[], int nbrQuestAct, Weapons listWeapons[], Armor 
 
 	wrefresh(win);
 
-	key = wgetch(win);
+	wgetch(win);
 
 	box(win, ' ', ' ');
 	wborder(win, ' ', ' ', ' ',' ',' ',' ',' ',' ');
@@ -451,7 +450,7 @@ int craftMenu(Inventory inventory[], Drug listDrug[], Player player, int *compon
 			if(*exoticBlood >= 40 && *gem >= 1)
 			{
 				*exoticBlood -= 40;
-				*gem--;
+				(*gem)--;
 				for(s = 0; s < player.inventorySize; s++)
 				{
 					if(inventory[s].type == -1)
@@ -765,7 +764,7 @@ void gameOver(int source, int score)
 	}
 
 
-	int k = wgetch(win);
+	wgetch(win);
 	wattroff(win,A_BOLD);
 	box(win,' ',' ');
 	wborder(win, ' ', ' ', ' ',' ',' ',' ',' ',' ');
@@ -777,7 +776,6 @@ void gameOver(int source, int score)
 int passwordComputer()
 {
 	int ret = 1;
-	int k = 0;
 	int i = 0;
 	char password[11];
 	char crypt[] = "\xf4\xb2\xa3\xa8\xf1\xb4\xf3\xa3\xb4\xe1";
@@ -830,7 +828,7 @@ int passwordComputer()
 		wattroff(win,COLOR_PAIR(47));
 	}
 
-	k = wgetch(win);
+	wgetch(win);
 	box(win,' ',' ');
 	wborder(win, ' ', ' ', ' ',' ',' ',' ',' ',' ');
 	wclear(win);
