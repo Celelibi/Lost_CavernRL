@@ -80,8 +80,8 @@ int main(void)
 	int killDroid = 0;
 
 // Initialisation
-	initscr(); 
-	raw();
+	initscr();
+	cbreak();
 	noecho();
 	curs_set(0); // on eteint le curseur
 	start_color();
