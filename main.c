@@ -25,12 +25,88 @@ _____|\___/ ____/\__|  \____|\__,_|  \_/ \___|_|   _|  _|
 
 void quit();
 
+static void read_name(WINDOW *parentwin, char *buf, size_t bufsize)
+{
+	WINDOW *formwin;
+	FIELD *fields[2] = {NULL};
+	FORM *form;
+	int rows, cols;
+	int ch, cont, err;
+	int i;
+
+	memset(buf, 0, bufsize);
+
+	fields[0] = new_field(1, bufsize - 1, 0, 0, 0, 0);
+	field_opts_off(fields[0], O_AUTOSKIP);
+	field_opts_off(fields[0], O_NULLOK);
+	field_opts_off(fields[0], O_PASSOK);
+	set_field_type(fields[0], TYPE_ALNUM, 1);
+	form = new_form(fields);
+
+	scale_form(form, &rows, &cols);
+	formwin = derwin(parentwin, 3, 58, 12, 1);
+	keypad(formwin, TRUE);
+	wborder(formwin, '|', '|', '-', '-', '+', '+', '+', '+');
+	set_form_win(form, formwin);
+	set_form_sub(form, derwin(formwin, rows, cols, 1, 19));
+	mvwprintw(formwin, 1, 2, "Enter your name:");
+	post_form(form);
+
+	cont = 1;
+	while (cont) {
+		wrefresh(parentwin);
+		ch = wgetch(formwin);
+
+		switch (ch) {
+		case KEY_LEFT:
+			form_driver(form, REQ_PREV_CHAR);
+			break;
+		case KEY_RIGHT:
+			form_driver(form, REQ_NEXT_CHAR);
+			break;
+		case KEY_HOME:
+			form_driver(form, REQ_BEG_LINE);
+			break;
+		case KEY_END:
+			form_driver(form, REQ_END_LINE);
+			break;
+		case KEY_BACKSPACE:
+			form_driver(form, REQ_DEL_PREV);
+			break;
+		case KEY_DC:
+			form_driver(form, REQ_DEL_CHAR);
+			break;
+		case KEY_ENTER:
+		case '\n':
+			err = form_driver(form, REQ_VALIDATION);
+			if (err == E_OK)
+				cont = 0;
+			break;
+		default:
+			form_driver(form, ch);
+			break;
+		}
+	}
+
+	unpost_form(form);
+
+	strncpy(buf, field_buffer(fields[0], 0), bufsize - 1);
+
+	free_form(form);
+	free_field(fields[0]);
+
+	// Remove trailing white spaces
+	for (i = bufsize - 2; i >= 0 && buf[i] == ' '; i--)
+		buf[i] = '\0';
+
+	mvwprintw(formwin, 1, 19, "%s", buf);
+}
+
 int main(void)
 {
 	srand(time(NULL));
 
 	Player player;
-	int nameLen = 0;
 	int powerUsed = 0;
 	int score = 0;
 	int nbrQuestsDone = 0;
@@ -131,28 +207,10 @@ int main(void)
 	mvwprintw(win_Begin,6,19,"(A RogueLike by S01den)");
 	wattroff(win_Begin,COLOR_PAIR(124));
 
-	mvwprintw(win_Begin,12,1,"----------------------------------------------------------");
-	mvwprintw(win_Begin,14,1,"----------------------------------------------------------");
-	mvwprintw(win_Begin,13,1,"| Enter your name:                                       |");
-
-	int keyName = 0;
-	nameLen = 0;
-	while(keyName != '\n')
-	{
-		keyName = wgetch(win_Begin);
-		if(keyName == KEY_BACKSPACE && nameLen > 0)
-		{
-			player.name[nameLen-1] = ' ';
-			nameLen--;
-		}
-		else if(keyName != '\n' && nameLen <= 14)
-		{
-			player.name[nameLen] = keyName;
-			nameLen++;
-		}
-		mvwprintw(win_Begin,13,20,"%s",player.name);
-		wrefresh(win_Begin);
-	}
+	wnoutrefresh(win_Begin);
+	curs_set(1);
+	read_name(win_Begin, player.name, sizeof(player.name));
+	curs_set(0);
 
 	mvwprintw(win_Begin,16,0,"Hi %s, we were waiting for you.",player.name);
 	mvwprintw(win_Begin,17,0,"Unfortunately, you were infected by the %s",typeDisease[diseaseIndice]);

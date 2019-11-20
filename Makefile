@@ -3,7 +3,7 @@ OPTFLAGS=-ggdb3 -Og
 CFLAGS=-std=c99 -pedantic -Wall -Wextra $(OPTFLAGS)
 LD=gcc
 LDFLAGS=
-LIBS=-lm -lncurses
+LIBS=-lm -lncurses -lform
 
 SRCS=main.c \
     ennemy.c \

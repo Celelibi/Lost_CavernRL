@@ -7,9 +7,10 @@
 #include <math.h>
 #include <string.h>
 #include <curses.h>
+#include <form.h>
 #include <termios.h>
 #include <termio.h>
-#include <sgtty.h> 
+#include <sgtty.h>
 #include <signal.h>
 #include <linux/tty.h>
 #include "constantes.h"
