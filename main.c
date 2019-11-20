@@ -30,11 +30,7 @@ int main(void)
 	srand(time(NULL));
 
 	Player player;
-	char name[20];
 	int nameLen = 0;
-	for(nameLen = 0; nameLen < 20; nameLen++)
-		name[nameLen] = 0;
-
 	int powerUsed = 0;
 	int score = 0;
 	int nbrQuestsDone = 0;
